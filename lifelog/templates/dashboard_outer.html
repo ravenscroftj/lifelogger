@@ -1,0 +1,27 @@
+{%extends "mainpage.html"%}
+{%block title%}
+{%block dashtitle%}Dashboard{%endblock%} :: LifeLog Dashboard
+{%endblock%}
+{%block content%}
+
+<div class="row">
+    <div class="span12">
+        <h1>LifeLog Dashboard</h1>
+
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="/dashboard">Dashboard</a>
+                <ul class="nav">
+                    <li><a href="/stats/add">Create Statistic</a></li>
+                    <li><a href="/stats/display">Generate Graphs</a></li>
+                </ul>
+            </div>
+        </div>
+
+        {%block dashcontent%}
+        {%endblock%}
+
+    </div>
+</div>
+
+{%endblock%}

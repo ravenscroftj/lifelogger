@@ -1,0 +1,33 @@
+{%extends "dashboard_outer.html"%}
+{%block dashtitle%}Create a statistic{%endblock%}
+{%block dashcontent%}
+{% if not success %}
+<form action="{{ url_for('add_stat') }}" method="POST" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Create a statistic</legend>
+
+        <label>Statistic Name</label>
+        <input type="text" name="name"/>
+        <span class="help-block">The name of the statistic that you want to start recording</span>
+
+
+        <label>Statistic Description</label>
+        <textarea name="description" rows="5"></textarea>
+        <span class="help-block">A short description of the statistic</span>
+
+
+        <label>Statistic Icon</label>
+        <input type="file" name="icon">
+        <p>Image file for use as icon for the statistic, should be 150x150px</p>
+
+        <button type="submit" class="btn btn-primary">Create Statistic</button>
+    </fieldset>
+</form>
+{% else %}
+<div class="hero-unit">
+    <h1>All Done!</h1>
+    <p>The new statistic was added. You can start recording data to it now!</p>
+    <a href="{{ url_for('.dashboard') }}">Back to Dashboard</a>
+</div>
+{% endif %}
+{%endblock%}
