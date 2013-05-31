@@ -1,0 +1,28 @@
+{%extends "dashboard_outer.html"%}
+{%block dashtitle%}Add Statistic Reading{%endblock%}
+{%block dashcontent%}
+{% if not success %}
+<form action="{{ url_for('record_stat', stat=stat) }}" method="POST" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Add reading for {{stat['name']}} </legend>
+
+        <p><img src="{{url_for('send_uploaded_icon', filename=stat['icon']) }}" width="50" class="img-circle">
+        {{stat['description']}}</p>
+
+
+        <label>Time of Reading</label>
+        <input type="text" name="name"/>
+        <span class="help-block">The name of the statistic that you want to start recording</span>
+
+
+        <button type="submit" class="btn btn-primary">Send Recording</button>
+    </fieldset>
+</form>
+{% else %}
+<div class="hero-unit">
+    <h1>All Done!</h1>
+    <p>The new statistic was added. You can start recording data to it now!</p>
+    <a href="{{ url_for('.dashboard') }}">Back to Dashboard</a>
+</div>
+{% endif %}
+{%endblock%}

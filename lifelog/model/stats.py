@@ -9,7 +9,7 @@ def add_reading( stat_dict ):
 
     ts = datetime.fromtimestamp( stat_dict['timestamp'] )
     
-    stats = db.stats
+    stats = db.records
 
     return stats.insert({
         "stat" : stat_dict['stat'],
