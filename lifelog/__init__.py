@@ -8,6 +8,7 @@ app = Flask(__name__)
 client = MongoClient("localhost", 27017)
 db = client.lifelog
 
+import lifelog.util.converters
 import lifelog.web
 
 def install_mongo():

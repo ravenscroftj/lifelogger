@@ -56,12 +56,14 @@ def add_stat():
     
     return render_template("create_stat.html", success=success)
 
-@app.route("/stats/<id>/record")
-def record_stat(id):
+@app.route("/stats/<stat:stat>/record")
+def record_stat(stat):
     """Add a new recording for the given statistic"""
 
     if request.method == "POST":
-        add_reading(
+        add_reading(request.values)
+    else:
+        return render_template("add_reading.html", stat=stat)
 
 
 @app.route("/icons/<filename>")
