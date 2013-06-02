@@ -4,6 +4,7 @@ from flask import Flask
 from pymongo import MongoClient, ASCENDING, DESCENDING
 
 app = Flask(__name__)
+app.config.from_pyfile('application.cfg', silent=True)
 
 client = MongoClient("localhost", 27017)
 db = client.lifelog
@@ -19,7 +20,7 @@ def install_mongo():
 
 def main():
     """Main entrypoint for lifelog server"""
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
 
 
 if __name__ == "__main__":

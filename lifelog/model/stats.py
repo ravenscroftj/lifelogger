@@ -7,7 +7,7 @@ from lifelog import db
 
 def add_reading( stat, dict ):
 
-    ts = datetime.fromtimestamp( dict['timestamp'] )
+    ts = datetime.fromtimestamp( float(dict['timestamp']) )
     
     stats = db.records
 
