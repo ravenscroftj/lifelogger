@@ -1,0 +1,28 @@
+{%extends "mainpage.html"%}
+{%block title%}Log in{%endblock%}
+{%block  content%}
+
+<form action="{{url_for(".login")}}" method="POST">
+
+    {% include "error_message.html" %}
+
+    <legend>Log in to LifeLog</legend>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username">
+    <span class="help-block">The username you signed up to LifeLog with</span>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" value="password">
+    <span class="help-block">The password you signed up to LifeLog with</span>
+
+    <button type="submit" class="btn btn-primary">Log In</button>
+
+    <input type="hidden" name="referrer" value="{%if referrer %}{{referrer}}{%endif%}" />
+
+</form>
+
+
+    <p>New to LifeLog? Consider <a href="{{url_for(".register")}}">Signing up</a>!</p>
+
+{%endblock%}

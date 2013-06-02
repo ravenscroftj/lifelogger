@@ -1,16 +1,43 @@
-<!doctype html>
-<html>
-  <head>
-    {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>{% block title %}Register With Lifelog{% endblock %} - LifeLog</title>
-    {% endblock %}
-  </head>
-<body>
-  <div id="content">{% block content %}{% endblock %}</div>
-  <div id="footer">
-    {% block footer %}
-    &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>.
-    {% endblock %}
-  </div>
-</body>
+{%extends "mainpage.html"%}
+{%block title%}Register{%endblock%}
+{%block  content%}
+{% if not success %}
+<form action="{{url_for(".register")}}" method="POST">
+
+    {% include "error_message.html" %}
+
+    <legend>Sign up to LifeLog</legend>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username">
+    <span class="help-block">Enter a username you wish to be identified with</span>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <span class="help-block">A secure password to log in with</span>
+
+    <label for="cpassword">Confirm Password</label>
+    <input type="password" name="cpassword" id="cpassword">
+    <span class="help-block">Type your password again</span>
+
+    <label for="email">Email Address</label>
+    <input type="text" name="email" id="email">
+    <span class="help-block">An email address we can use to send you important information (we won't spam you)</span>
+
+
+
+
+    <button type="submit" class="btn btn-primary">Log In</button>
+
+</form>
+
+
+<p>Already a member? <a href="{{url_for(".login")}}">Log in</a>!</p>
+{% else %}
+<div class="hero-unit">
+    <h1>Registered!</h1>
+    <p>..1..2..3..Poof... and you're signed up, as simple as that! You can go to your dashboard now to start collecting stats!</p>
+    <a href="{{ url_for('.dashboard') }}">Go to Dashboard</a>
+</div>
+{% endif %}
+{%endblock%}

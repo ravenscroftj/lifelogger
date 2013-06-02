@@ -17,6 +17,11 @@
             </div>
         </div>
 
+        <script type="text/javascript">
+            $(function () {
+                    $("[rel='popover']").popover({"title":"API URL", "placement":"left"});
+            });
+        </script>
 
         <div class="row">
             <div class="span3"><h2>Top Statistics:</h2></div>
@@ -29,7 +34,7 @@
                     <div class="span4">
                         <h4> {{stat.name}}</h4>
                         <p>{{stat.description}}</p>
-                        <p>API POST URL: <pre>{{ url_for('.submit_statistic', _external=True, stat=stat)}}</pre></p>
+                        <p></p>
                     </div>
                     <div class="span2">
                             <h2>{{ records.find({ 'stat' : stat['_id']}).count() }}</h2>
@@ -44,6 +49,12 @@
                             <a href="{{ url_for('.record_stat', stat=stat)}}">
                                 Record
                             </a>
+                            </li>
+                            <li>
+                            <a href="#" rel="popover" data-html="true" 
+                            data-content="<pre>{{ url_for('.submit_statistic', _external=True, stat=stat)}}</pre>">
+                            API
+                        </a>
                             </li>
                     </div>
                 </div>
