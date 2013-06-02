@@ -24,7 +24,7 @@
                 {% for stat in stats.find() %}
                 <div class="row">
                     <div class="span1">
-                        <img width="50px" src="{{url_for('send_uploaded_icon', filename=stat['icon'])}}" alt="thumbnail"/>
+                        <img width="50px" src="{{url_for('send_uploaded_file', filename=stat['icon'])}}" alt="thumbnail"/>
                     </div>
                     <div class="span4">
                         <h4> {{stat.name}}</h4>
