@@ -7,7 +7,7 @@ from flask import request, jsonify
 from lifelog import db, app
 from lifelog.model.stats import add_reading
 
-@app.route("/api/submit/<stat:stat>", methods=['POST'])
+@app.route("/api/submit/<statid:stat>", methods=['POST'])
 def submit_statistic(stat):
     """Save a statistic to the server
     

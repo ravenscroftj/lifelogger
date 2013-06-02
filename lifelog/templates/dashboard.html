@@ -7,12 +7,12 @@
 
         <div class="row">
             <div class="span2 statbox">
-                <h1>{{ stats.find().count()}}</h1>
+                <h1>{{ stats|length }}</h1>
                 <h3>Statistics</h3>
             </div>
 
             <div class="span2 statbox">
-                <h1>{{ records.count() }}</h1>
+                <h1>{{ records }}</h1>
                 <h3>Recordings</h3>
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="row">
             <div class="span3"><h2>Top Statistics:</h2></div>
             <div class="span9">
-                {% for stat in stats.find() %}
+                {% for stat in stats %}
                 <div class="row">
                     <div class="span1">
                         <img width="50px" src="{{url_for('send_uploaded_file', filename=stat['icon'])}}" alt="thumbnail"/>
@@ -37,7 +37,7 @@
                         <p></p>
                     </div>
                     <div class="span2">
-                            <h2>{{ records.find({ 'stat' : stat['_id']}).count() }}</h2>
+                            <h2>{{ stat['count'] }}</h2>
                     </div> 
                     <div class="span2">
                         <ul>

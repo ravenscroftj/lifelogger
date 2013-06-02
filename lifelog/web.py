@@ -76,11 +76,14 @@ def login():
 @auth.require_auth
 def dashboard():
     """Allow a user to see their dashboard"""
-    
-    records =   db.records
-    stats =     db.types
 
-    return render_template("dashboard.html", records=records, stats=stats)
+    total_records =   db.records.find({"user": auth.current_user()['_id']}).count()
+    stats = []
+    for stat in db.types.find({"user": auth.current_user()['_id']}):
+        stat['count'] = db.records.find({"stat" : stat['_id']}).count()
+        stats.append(stat)
+
+    return render_template("dashboard.html", records=total_records, stats=stats)
 
 #----------------------------------------------------------------------
 @app.route("/logout")
@@ -123,7 +126,7 @@ def add_stat():
 
 #----------------------------------------------------------------------
 
-@app.route("/stats/<stat:stat>/record", methods=['GET','POST'])
+@app.route("/stats/<statid:stat>/record", methods=['GET','POST'])
 @auth.require_auth
 def record_stat(stat):
     """Add a new recording for the given statistic"""
@@ -141,7 +144,7 @@ def record_stat(stat):
             success = success)
 
 #---------------------------------------------------------------------
-@app.route("/stats/<stat:stat>/view")
+@app.route("/stats/<statname:stat>/view")
 def view_stat(stat):
     """Show statistics in a chart"""
 

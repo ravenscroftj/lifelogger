@@ -10,7 +10,13 @@ from functools import wraps
 class AuthenticationException(Exception):
     pass
 
-
+#----------------------------------------------------------------------
+def current_user():
+    db.users.ensure_index("username")
+    try:
+        return db.users.find_one({"username" : session['username']})
+    except KeyError:
+        return None
 #----------------------------------------------------------------------
 
 def login(username, password):
