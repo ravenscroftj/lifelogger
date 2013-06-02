@@ -15,7 +15,9 @@ def add_reading( stat, dict ):
     dict['timestamp'] = None
     dict['date'] = ts
     dict['stat'] = stat['_id']
-    dict['user'] = current_user()['_id']
+
+    #get the stat user
+    dict['user'] = stat['user']
 
     return stats.insert(dict)
 
