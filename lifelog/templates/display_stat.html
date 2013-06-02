@@ -2,7 +2,10 @@
 {%block dashtitle%}View {{stat.name}}{%endblock%}
 {%block dashcontent%}
 
+<script language="javascript" type="text/javascript" src="/static/jqplot/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="/static/jqplot/plugins/jqplot.dateAxisRenderer.min.js"></script>
 <div class="row">
+
     <div class="span2">
     <img src="{{url_for('send_uploaded_file', filename=stat['icon']) }}"
     width="150" class="img-circle">    </div>
@@ -14,9 +17,19 @@
     </div>
 
     <div class="span6">
-    {%for r in records%}
-    <div>{{r.date}}</div>
-    {%endfor%}
+    <script type="text/javascript">
+        
+            $(document).ready(function(){
+                    var line1=[{%for d,x in plots%}['{{d}}',{{x}}],{%endfor%}];
+              var plot1 = $.jqplot('chart1', [line1], {
+title:'Time Frequency Graph ({{starttime}} - {{endtime}})',
+                axes:{xaxis:{renderer:$.jqplot.DateAxisRenderer}},
+                series:[{lineWidth:4, markerOptions:{style:'square'}}]
+              });
+            });
+        </script>
+
+        <div id="chart1"></div>
     </div>
 </div>
 

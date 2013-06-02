@@ -8,6 +8,7 @@ from werkzeug import secure_filename
 from lifelog import db, app, auth
 from lifelog.model.stats import create_stat, add_reading
 
+
 ICONS_DIR = app.config['UPLOAD_DIR']
 TIME_FORMAT = "%m/%d/%Y %H:%M:%S"
 
@@ -143,10 +144,20 @@ def record_stat(stat):
 @app.route("/stats/<stat:stat>/view")
 def view_stat(stat):
     """Show statistics in a chart"""
+
+    from lifelog.graph import build_frequency_graph
+    import time
+    import datetime
     
     records = db.records.find({"stat" : stat['_id']})
 
-    return render_template("display_stat.html", stat=stat,records=records)
+
+    end    = datetime.datetime.now()
+    start  = end - datetime.timedelta(days=2) 
+
+    points = build_frequency_graph(stat, 3600, int(start.strftime("%s")), int(end.strftime("%s")))
+
+    return render_template("display_stat.html", stat=stat,records=records, plots=points, starttime=start, endtime=end)
 
 #----------------------------------------------------------------------
 
