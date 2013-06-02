@@ -8,7 +8,7 @@ from werkzeug import secure_filename
 from lifelog import db, app
 from lifelog.model.stats import create_stat, add_reading
 
-ICONS_DIR = "/home/james/projects/lifelogserver/lifelog/uploads"
+ICONS_DIR = app.config['UPLOAD_DIR']
 TIME_FORMAT = "%m/%d/%Y %H:%M:%S"
 
 @app.route('/')

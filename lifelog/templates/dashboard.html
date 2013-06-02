@@ -29,6 +29,7 @@
                     <div class="span4">
                         <h4> {{stat.name}}</h4>
                         <p>{{stat.description}}</p>
+                        <p>API POST URL: <pre>{{ url_for('.submit_statistic', _external=True, stat=stat)}}</pre></p>
                     </div>
                     <div class="span2">
                             <h2>{{ records.find({ 'stat' : stat['_id']}).count() }}</h2>
