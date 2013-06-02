@@ -3,6 +3,7 @@
 from datetime import datetime
 
 from lifelog import db
+from lifelog.auth import current_user
 
 
 def add_reading( stat, dict ):
@@ -14,6 +15,7 @@ def add_reading( stat, dict ):
     dict['timestamp'] = None
     dict['date'] = ts
     dict['stat'] = stat['_id']
+    dict['user'] = current_user()['_id']
 
     return stats.insert(dict)
 
@@ -23,5 +25,5 @@ def create_stat( name, description, icon=""):
 
     types = db.types
 
-    types.insert({"name":name, "description":description, "icon": icon})
+    types.insert({"name":name, "description":description, "icon": icon, "user" : current_user()['_id'] })
 
