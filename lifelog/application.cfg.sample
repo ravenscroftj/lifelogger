@@ -1,2 +1,2 @@
 SERVER_NAME="0.0.0.0:5000"
-
+UPLOAD_DIR = "/home/james/projects/lifelogserver/lifelog/uploads"
