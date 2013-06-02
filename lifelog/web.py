@@ -94,6 +94,6 @@ def view_stat(stat):
 
 #----------------------------------------------------------------------
 
-@app.route("/icons/<filename>")
-def send_uploaded_icon(filename):
+@app.route("/uploads/<filename>")
+def send_uploaded_file(filename):
     return send_from_directory(ICONS_DIR, filename)
