@@ -1,5 +1,6 @@
 """Set of functions for converting URL elements to and from python objects
 """
+import re
 from werkzeug.routing import BaseConverter
 
 try:
@@ -8,6 +9,9 @@ except:
     from bson.objectid import ObjectId
 
 from lifelog import db, app
+
+def slugify( input ):
+    return 
 
 class StatIDConverter(BaseConverter):
     """Turn a statistic ID into a stat object and vica versa
@@ -26,13 +30,16 @@ class StatNameConverter(BaseConverter):
     """
 
     def to_python(self, value):
-        username,name = value.split(":")
-        user = db.users.find_one({"username":username})
-        return db.types.find_one({"name":name, "user" : user['_id']})
+        username,name = value.replace("_"," ").split(":")
+
+        print re.escape(username)
+        user = db.users.find_one({"username": re.compile(username, re.IGNORECASE) })
+        
+        return db.types.find_one({"name": re.compile(name, re.IGNORECASE) , "user" : user['_id']})
 
     def to_url(self, value):
         username = db.users.find_one(value['user'])['username']
-        return str(username + ":" + value['name'])
+        return str(username + ":" + value['name']).lower().replace(" ","_")
 
 app.url_map.converters['statname'] = StatNameConverter
 
