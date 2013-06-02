@@ -28,3 +28,18 @@ def build_frequency_graph(stat, interval, starttime, endtime):
             
 
     return points
+
+
+
+def build_pie_chart( stat, field):
+    """Build a pie/distribution chart using a given field"""
+
+    values = db.records.find({"stat": stat['_id']}).distinct(field)
+
+    dist = {}
+
+    for v in values:
+        dist[v] = db.records.find({"stat": stat['_id'], field: v}).count()
+
+
+    return dist

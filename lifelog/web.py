@@ -148,7 +148,7 @@ def record_stat(stat):
 def view_stat(stat):
     """Show statistics in a chart"""
 
-    from lifelog.graph import build_frequency_graph
+    from lifelog.graph import build_frequency_graph, build_pie_chart
     import time
     import datetime
     
@@ -158,9 +158,16 @@ def view_stat(stat):
     end    = datetime.datetime.now()
     start  = end - datetime.timedelta(days=2) 
 
-    points = build_frequency_graph(stat, 3600, int(start.strftime("%s")), int(end.strftime("%s")))
+    graph = "timefreq"
 
-    return render_template("display_stat.html", stat=stat,records=records, plots=points, starttime=start, endtime=end)
+    if 'gfield' in request.values:
+        graph = "pie"
+        points = build_pie_chart(stat, request.values['gfield'])
+    else:
+        points = build_frequency_graph(stat, 3600, int(start.strftime("%s")), int(end.strftime("%s")))
+
+
+    return render_template("display_stat.html", stat=stat,records=records, graph=graph, plots=points, starttime=start, endtime=end)
 
 #----------------------------------------------------------------------
 
