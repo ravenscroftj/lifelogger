@@ -34,7 +34,7 @@
 {% else %}
 <div class="hero-unit">
     <h1>Reading aded</h1>
-    <p><img src="{{url_for('send_uploaded_icon', filename=stat['icon']) }}"
+    <p><img src="{{url_for('send_uploaded_file', filename=stat['icon']) }}"
     width="50" class="img-circle">A new reading was inserted for {{stat['name']}}</p>
     <a href="{{ url_for('.dashboard') }}">Back to Dashboard</a>
 </div>
