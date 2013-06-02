@@ -11,8 +11,21 @@
 
 
         <label>Time of Reading</label>
-        <input type="text" name="name"/>
-        <span class="help-block">The name of the statistic that you want to start recording</span>
+        <input type="text" name="timestamp" value="{{ctime}}" id="date"/>
+        <span class="help-block">Select a time for the recording</span>
+
+        <script type="text/javascript">
+        <!--
+        jQuery(function($){
+        $('#date').datetimepicker({
+            "alwaysSetTime" : true,
+            "defaultValue" : "{{ctime}}",
+            "timeFormat" : "HH:mm:ss",
+            "parse" : "loose"
+        });
+        });
+        -->
+        </script>
 
 
         <button type="submit" class="btn btn-primary">Send Recording</button>
@@ -20,8 +33,9 @@
 </form>
 {% else %}
 <div class="hero-unit">
-    <h1>All Done!</h1>
-    <p>The new statistic was added. You can start recording data to it now!</p>
+    <h1>Reading aded</h1>
+    <p><img src="{{url_for('send_uploaded_icon', filename=stat['icon']) }}"
+    width="50" class="img-circle">A new reading was inserted for {{stat['name']}}</p>
     <a href="{{ url_for('.dashboard') }}">Back to Dashboard</a>
 </div>
 {% endif %}

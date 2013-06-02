@@ -10,6 +10,7 @@ db = client.lifelog
 
 import lifelog.util.converters
 import lifelog.web
+import lifelog.api
 
 def install_mongo():
 

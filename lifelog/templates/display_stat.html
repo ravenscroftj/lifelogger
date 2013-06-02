@@ -1,0 +1,24 @@
+{%extends "dashboard_outer.html"%}
+{%block dashtitle%}View {{stat.name}}{%endblock%}
+{%block dashcontent%}
+
+<div class="row">
+    <div class="span2">
+    <img src="{{url_for('send_uploaded_icon', filename=stat['icon']) }}"
+    width="150" class="img-circle">    </div>
+    <div class="span4">
+
+    <h1>{{stat.name}}</h1>
+    <p>{{stat.description}}</p>
+
+    </div>
+
+    <div class="span6">
+    {%for r in records%}
+    <div>{{r.date}}</div>
+    {%endfor%}
+    </div>
+</div>
+
+
+{%endblock%}

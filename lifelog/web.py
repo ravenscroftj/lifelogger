@@ -1,16 +1,21 @@
 import os
 
+from time import strftime, strptime, mktime
+
 from flask import render_template, request, send_from_directory
 from werkzeug import secure_filename
 
 from lifelog import db, app
-from lifelog.model.stats import create_stat
+from lifelog.model.stats import create_stat, add_reading
 
 ICONS_DIR = "/home/james/projects/lifelogserver/lifelog/uploads"
+TIME_FORMAT = "%m/%d/%Y %H:%M:%S"
 
 @app.route('/')
 def index():
     return render_template("index.html")
+
+#----------------------------------------------------------------------
 
 @app.route('/register')
 def register():
@@ -20,14 +25,18 @@ def register():
     else:
         return render_template("register.html")
 
+#----------------------------------------------------------------------
+
 @app.route("/dashboard")
 def dashboard():
     """Allow a user to see their dashboard"""
     
-    records =   db.stats
+    records =   db.records
     stats =     db.types
 
     return render_template("dashboard.html", records=records, stats=stats)
+
+#----------------------------------------------------------------------
 
 @app.route("/stats/add", methods=['GET', 'POST'])
 def add_stat():
@@ -56,15 +65,34 @@ def add_stat():
     
     return render_template("create_stat.html", success=success)
 
-@app.route("/stats/<stat:stat>/record")
+#----------------------------------------------------------------------
+
+@app.route("/stats/<stat:stat>/record", methods=['GET','POST'])
 def record_stat(stat):
     """Add a new recording for the given statistic"""
 
-    if request.method == "POST":
-        add_reading(request.values)
-    else:
-        return render_template("add_reading.html", stat=stat)
+    success = False
 
+    if request.method == "POST":
+        values = {x:request.values[x] for x in request.values}
+        values['timestamp'] = mktime(strptime(values['timestamp'], 
+            TIME_FORMAT))
+        success = ( add_reading(stat, values) != None )
+    
+    return render_template("add_reading.html", stat=stat, 
+            ctime=strftime(TIME_FORMAT),
+            success = success)
+
+#---------------------------------------------------------------------
+@app.route("/stats/<stat:stat>/view")
+def view_stat(stat):
+    """Show statistics in a chart"""
+    
+    records = db.records.find({"stat" : stat['_id']})
+
+    return render_template("display_stat.html", stat=stat,records=records)
+
+#----------------------------------------------------------------------
 
 @app.route("/icons/<filename>")
 def send_uploaded_icon(filename):

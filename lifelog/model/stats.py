@@ -5,16 +5,17 @@ from datetime import datetime
 from lifelog import db
 
 
-def add_reading( stat_dict ):
+def add_reading( stat, dict ):
 
-    ts = datetime.fromtimestamp( stat_dict['timestamp'] )
+    ts = datetime.fromtimestamp( dict['timestamp'] )
     
     stats = db.records
 
-    return stats.insert({
-        "stat" : stat_dict['stat'],
-        "date" : ts,
-        })
+    dict['timestamp'] = None
+    dict['date'] = ts
+    dict['stat'] = stat['_id']
+
+    return stats.insert(dict)
 
 
 def create_stat( name, description, icon=""):

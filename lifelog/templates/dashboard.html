@@ -36,11 +36,11 @@
                     <div class="span2">
                         <ul>
                             <li>
-                                <a href="{{ url_for('.record_stat', id=stat['_id'])}}">
+                                <a href="{{ url_for('.view_stat', stat=stat)}}">
                                 View</a>
                             </li>
                             <li>
-                            <a href="{{ url_for('.record_stat', id=stat['_id'])}}">
+                            <a href="{{ url_for('.record_stat', stat=stat)}}">
                                 Record
                             </a>
                             </li>
