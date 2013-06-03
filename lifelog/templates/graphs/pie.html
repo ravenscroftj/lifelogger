@@ -1,0 +1,26 @@
+{% elif graph == "pie" %}
+    <script type="text/javascript" src="/static/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+          var data = [
+            {% for v in plots %}
+            ['{{v}}', {{plots[v]}}],
+            {% endfor %}
+          ];
+          var plot1 = jQuery.jqplot ('chart1', [data], 
+            { 
+              seriesDefaults: {
+                // Make this a pie chart.
+                renderer: jQuery.jqplot.PieRenderer, 
+                rendererOptions: {
+                  // Put data labels on the pie slices.
+                  // By default, labels show the percentage of the slice.
+                  showDataLabels: true
+                }
+              }, 
+              legend: { show:true, location: 'e' }
+            }
+          );
+        });
+    </script>
+
