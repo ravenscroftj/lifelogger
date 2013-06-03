@@ -2,5 +2,6 @@
 *.swp
 env
 build/
-*.egg.info/
+*.egg-info/
 *.cfg
+lifelog/uploads

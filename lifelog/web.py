@@ -155,8 +155,17 @@ def view_stat(stat):
     records = db.records.find({"stat" : stat['_id']})
 
 
-    end    = datetime.datetime.now()
-    start  = end - datetime.timedelta(days=2) 
+    if 'endtime' in request.values:
+        end = datetime.datetime.strptime(request.values['endtime'], 
+                TIME_FORMAT)
+    else:
+        end    = datetime.datetime.now()
+
+    if 'starttime' in request.values:
+        start = datetime.datetime.strptime(request.values['starttime'], 
+                TIME_FORMAT)
+    else:
+        start  = end - datetime.timedelta(days=2)
 
     graph = "timefreq"
 
@@ -164,10 +173,22 @@ def view_stat(stat):
         graph = "pie"
         points = build_pie_chart(stat, request.values['gfield'])
     else:
-        points = build_frequency_graph(stat, 3600, int(start.strftime("%s")), int(end.strftime("%s")))
+        
+        if 'scale' in request.values:
+            interval = int(request.values['scale'])
+        else:
+            interval = 3600
+
+        points = build_frequency_graph(stat, interval, int(start.strftime("%s")), int(end.strftime("%s")))
 
 
-    return render_template("display_stat.html", stat=stat,records=records, graph=graph, plots=points, starttime=start, endtime=end)
+    return render_template("display_stat.html", 
+            stat=stat,
+            records=records, 
+            graph=graph, 
+            plots=points, 
+            starttime=start, 
+            endtime=end)
 
 #----------------------------------------------------------------------
 

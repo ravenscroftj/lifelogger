@@ -8,6 +8,28 @@
 {% elif graph == "pie" %}
 <script type="text/javascript" src="/static/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
 {%endif%}
+
+<script type="text/javascript">
+<!--
+jQuery(function($){
+        $('#starttime').datetimepicker({
+            "maxDate" : new Date(),
+            "alwaysSetTime" : true,
+            "defaultValue" : "{{starttime.strftime("%m/%d/%Y %H:%M:%S")}}",
+            "timeFormat" : "HH:mm:ss",
+            "parse" : "loose"
+            });
+
+        $('#endtime').datetimepicker({
+            "maxDate" : new Date(),
+            "alwaysSetTime" : true,
+            "defaultValue" : "{{endtime.strftime("%m/%d/%Y %H:%M:%S")}}",
+            "timeFormat" : "HH:mm:ss",
+            "parse" : "loose"
+        });
+});
+-->
+</script>
 <div class="row">
 
     <div class="span2">
@@ -17,6 +39,31 @@
 
     <h1>{{stat.name}}</h1>
     <p>{{stat.description}}</p>
+
+    <form method="GET" action="{{url_for('.view_stat', stat=stat)}}">
+        <legend>Graph Options</legend>
+        <label for="scale">
+            Time Unit
+        </label>
+        <select name="scale" id="scale">
+            <option value="86400">Days</option>
+            <option value="3600" selected>Hours</option>
+            <option value="60">Minutes</option>
+        </select>
+
+        <label for="starttime">
+        Graph Start Time
+        </label>
+        <input type="text" placeholder="Select start time" class="datepicker" name="starttime" value="{{starttime.strftime("%m/%d/%Y %H:%M:%S")}}" id="starttime"/>
+
+        <label for="starttime">
+        Graph End Time
+        </label>
+        <input type="text" placeholder="Select end time" class="datepicker" name="endtime" value="{{endtime.strftime("%m/%d/%Y %H:%M:%S")}}" id="endtime"/>
+        <div>
+            <button type="submit" class="btn btn-primary">Update Graph</button>
+        </div>
+    </form>
 
     </div>
 

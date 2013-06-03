@@ -21,7 +21,6 @@ def main():
     import lifelog.util.converters
     import lifelog.web
     import lifelog.api
-    print app.url_map
     app.run(debug=True, host="0.0.0.0")
 
 
