@@ -9,6 +9,9 @@ app.config.from_pyfile('application.cfg', silent=True)
 client = MongoClient("localhost", 27017)
 db = client.lifelog
 
+import lifelog.util.converters
+import lifelog.web
+import lifelog.api
 
 def install_mongo():
 
@@ -18,9 +21,7 @@ def install_mongo():
 def main():
     """Main entrypoint for lifelog server"""
 
-    import lifelog.util.converters
-    import lifelog.web
-    import lifelog.api
+
     app.run(debug=True, host="0.0.0.0")
 
 
