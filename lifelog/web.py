@@ -44,7 +44,6 @@ def register():
             error = None
 
             try:
-                print v
                 auth.register(v['username'], v['password'], v['email'])
                 success = True
             except auth.AuthenticationException as e:
@@ -106,8 +105,6 @@ def add_stat():
     if request.method == 'POST':
 
         icon = ""
-
-        print request.files
 
         if len(request.files) > 0:
             image = request.files['icon']
